@@ -1,28 +1,38 @@
 {% extends "base.html" %}
 {% block title%}Pet List{% endblock %}
 {% block content%}
-<h1>Pets</h1>
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    {% for message in messages %}
-      <p>{{ message }}</p>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
-    <ul>
-        {% for pet in all_pets%}
-        <li>
-            {% if pet.photo_url%}
-            <img src="{{pet.photo_url}}" alt="">
-            {% endif %}
+<div class="container">
+    <h1>Pets</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <p><b>{{ message }}</b></p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
 
-            <a href="/pet/{{pet.id}}">{{pet.name}}</a>
 
+
+{% for pet in all_pets%}
+<div class="container">
+    <div class="card" style="width: 30rem">
+        {% if pet.photo_url %}
+        <img src="{{pet.photo_url}}" class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body">
+            <a class="card-title position-absolute top-0 start-50" href="/pet/{{pet.id}}">{{pet.name}}</a>
             {% if pet.available %}
             <b>is available!</b>
             {% endif %}
-        </li>
-        {% endfor %}
-      <a href="/add" class="btn btn-success">Add Pet</a> 
-      </ul>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+{% endfor %}
+
+<a href="/add" class="btn btn-success">Add Pet</a> 
+
 {% endblock %}

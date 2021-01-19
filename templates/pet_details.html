@@ -1,27 +1,41 @@
 {% extends "base.html" %}
 {% block title%}Pet Details{% endblock %}
 {% block content%}
-<h1>Pet Details</h1>
-<ul>
-    <li> Name: {{pet.name}}</li>
-    <li> Species: {{pet.species}}</li>
-    {% if pet.photo_url%}
-    <li><img src="{{pet.photo_url}}" alt=""></li>
-    {% endif %}
-    {% if pet.age %}
-    <li>Age: {{pet.age}}</li>
-    {% endif %}
-</ul>
+<div class="container">
+    <div class="card" style="width: 30rem">
+        {% if pet.photo_url %}
+          <img src="{{pet.photo_url}}" class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body">
+          <h3 class="card-title position-absolute top-0 start-50">{{pet.name}}</h3>
+          <h4 class="card-text">Details:</h4>
+          <ul class="card-text">
+              <li>Species: {{pet.species}}</li>
+              {% if pet.age %}
+              <li>Age: {{pet.age}}</li>
+              {% endif %}
+              {% if pet.notes %}
+              <li>Notes: {{pet.notes}}</li>
+              {% endif %}
+            
+          </ul>
+        </div>
+    </div>
+</div>
+
+
+
 <h2>Edit Pet Details</h2>
-<form id="pet-edit-form" method="POST">
-        {{ form.hidden_tag() }} <!--add type=hidden form fields -->
+<div class="container">
+    <form id="pet-edit-form" method="POST">
+        {{ form.hidden_tag() }} 
     
         {% for field in form
                if field.widget.input_type != 'hidden' %}
       
           <p>
             {{ field.label }}
-            {{ field }}
+            {{field(class_=form-control)}}
       
             {% for error in field.errors %}
               {{ error }}
@@ -31,8 +45,11 @@
         {% endfor %}
       
         <button class="btn btn-primary" type="submit">Submit</button>
-</form>
-<br>
-<a class="btn btn-success" href="/">Home</a>
+    </form>
+    <br>
+    <a class="btn btn-success" href="/">Home</a>
+
+</div>
+
 
 {% endblock %}
